@@ -1,17 +1,16 @@
 import React from 'react'
-import { View, Text, SafeAreaView } from 'react-native'
+import { NavigationContainer } from '@react-navigation/native'
+import MainStack from './src/stacks/MainStack';
 
+import UserContext from './src/contexts/UserContext';
 
-const App = () => {
-  return(
-    <SafeAreaView>
-      <View>
-        <Text>TESTANDO 123</Text>
-      </View>
-    </SafeAreaView>
+export default function App() {
+  return (
+    <UserContext>
+      <NavigationContainer>
+        <MainStack />
+      </NavigationContainer>
+    </UserContext>
     
-
-  )
+  );
 }
-
-export default App;
