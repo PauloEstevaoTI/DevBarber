@@ -5,7 +5,7 @@ import { TextInput } from "react-native-gesture-handler";
 
 
 
-export default ({IconSvg, placeholder}) => {
+export default ({IconSvg, placeholder, value, onChangeText, password}) => {
     return(
         <View style={styles.InputArea}>
             <IconSvg width="24" height="24"  fill="#268596"/>
@@ -13,6 +13,9 @@ export default ({IconSvg, placeholder}) => {
                 style={styles.Input} 
                 placeholder={placeholder}
                 placeholderTextColor= "#268596"
+                value={value}
+                onChangeText = {onChangeText}
+                secureTextEntry={password}
             />
         </View>
     );

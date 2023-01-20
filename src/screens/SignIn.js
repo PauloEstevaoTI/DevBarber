@@ -1,40 +1,89 @@
 import React from "react";
-import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
-import { TextInput } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
+import { Text, StyleSheet, View, TouchableOpacity, Platform } from "react-native";
+import { useState, useContext } from "react";
+//import UserContext
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SafeAreaView } from "react-native-safe-area-context";
+import {UserContext} from '../contexts/UserContext';
+
+import Api from "../Api";
 
 import SignInput from "../components/SignInput";
-
 
 import BarberLogo from '../assets/barber.svg'
 import EmailIcon from  '../assets/email.svg'
 import LockIcon  from   '../assets/lock.svg'
 
+
  function SignIn () {
+    const {dispatch: userDispatch} = useContext(UserContext)
+
+    const navigation = useNavigation();
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleMessageCLick = () => {
+        navigation.reset({
+            routes: [{name: 'SignUp'}]
+        })
+    }
+
+    const handleSignClick = async () => {
+        if(email && password){
+            let json = await Api.signIn(email, password)
+            if(json.token){
+                alert("DEU CERTO")
+                await AsyncStorage.setItem('token', json.token)
+                
+                userDispatch({
+                    type: 'setAvatar',
+                    payload: {
+                        avatar: json.data.avatar
+                    }
+                })
+
+                navigation.reset({
+                    routes:[{name: 'MainTab'}]
+                })
+
+            
+            }else{
+                alert('E-mail e ou senha errados')
+            }
+
+
+        }else {
+            alert("Preencha os campos")
+        }
+    }
 
     return(
         <SafeAreaView style={styles.container}>
             <BarberLogo width="100%" height="160" />
-
-            <View style={styles.InputArea}>
-                <SignInput 
-                    IconSvg={EmailIcon}
-                    placeholder="Digite seu E-mail"
-                />
-                <SignInput 
-                    IconSvg={LockIcon}
-                    placeholder="Digite sua senha"
-                />
-                <TouchableOpacity style={styles.CustomButtom}>
-                    <Text style={styles.CustomButtonText}>LOGIN</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.SignMessageButton}>
-                    <Text style={styles.SignMessageButtonText}>Ainda não possui uma conta?</Text>
-                    <Text style={styles.SignMessageButtonTextBold}>Cadastre-se</Text>
-                </TouchableOpacity>
-            </View>
-
-
+               <View style={styles.InputArea}>
+                    <SignInput 
+                        IconSvg={EmailIcon}
+                        placeholder="Digite seu E-mail"
+                        value={email}
+                        onChangeText={t=>setEmail(t)}
+                    />
+                    <SignInput 
+                        IconSvg={LockIcon}
+                        placeholder="Digite sua senha"
+                        value={password}
+                        onChangeText={t=>setPassword(t)}
+                        password={true}
+                    />
+                    <TouchableOpacity style={styles.CustomButtom} onPress={handleSignClick}>
+                        <Text style={styles.CustomButtonText}>LOGIN</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.SignMessageButton} onPress={handleMessageCLick}>
+                        <Text style={styles.SignMessageButtonText}>Ainda não possui uma conta?</Text>
+                        <Text style={styles.SignMessageButtonTextBold}>Cadastre-se</Text>
+                    </TouchableOpacity>
+                </View>
         </SafeAreaView>
     )
 
@@ -68,14 +117,15 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         marginTop: 50,
-        marginBottom: 20
-    },
+        marginBottom: 20,
+        width: '100%'
+        },
     SignMessageButtonText: {
-        fontSize: 16,
+        fontSize: 12,
         color: '#268596'
     },
     SignMessageButtonTextBold: {
-        fontSize: 16,
+        fontSize: 12,
         color: '#268596',
         fontWeight: 'bold',
         marginLeft: 5
