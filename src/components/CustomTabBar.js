@@ -17,6 +17,7 @@ const CustomTabBar = ({state, navigation}) => {
     }
 
     const {state:user} = useContext(UserContext)
+   
 
     return(
         <View style={styles.tabArea}>
@@ -33,8 +34,9 @@ const CustomTabBar = ({state, navigation}) => {
                 <FavoriteIcon style={{opacity: state.index === 3 ? 1 : 0.5}} width="24" height="24" fill="#FFFFFF" />
             </TouchableOpacity>
             <TouchableOpacity style={styles.tabItem} onPress={()=>goTo('Profile')}>
+            {/* <AccountIcon style={{opacity: state.index === 4 ? 1 : 0.5}} width="24" height="24" fill="#FFFFFF" /> */}
                 {user.avatar != '' ?
-                  <Image source={{uri: user.avatar}} /> 
+                  <Image source={{uri: user.avatar}} style={styles.avatarIcon}/> 
                   :
                   <AccountIcon style={{opacity: state.index === 4 ? 1 : 0.5}} width="24" height="24" fill="#FFFFFF" />
                 }

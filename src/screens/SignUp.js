@@ -93,7 +93,7 @@ import PersonIcon  from   '../assets/person.svg'
                     password={true}
                 />
                 <TouchableOpacity style={styles.CustomButtom} onPress={handleSignClick}>
-                    <Text style={styles.CustomButtonText}>CASTRAR</Text>
+                    <Text style={styles.CustomButtonText}>CADASTRAR</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.SignMessageButton} onPress={handleMessageCLick}>
                     <Text style={styles.SignMessageButtonText}>Já possui uma conta?</Text>

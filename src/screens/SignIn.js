@@ -34,7 +34,7 @@ import LockIcon  from   '../assets/lock.svg'
         if(email && password){
             let json = await Api.signIn(email, password)
             if(json.token){
-                alert("DEU CERTO")
+               
                 await AsyncStorage.setItem('token', json.token)
                 
                 userDispatch({
