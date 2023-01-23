@@ -7,4 +7,4 @@ App para encontrar uma barbearia e agendar
 
 #Tela de Cadastro:
 
-<img src="https://user-images.githubusercontent.com/53940439/213446882-4d86abdd-1547-49a6-8bcd-3050f37b6e90.png" width= "320px" heigth="180px">
+
