@@ -138,11 +138,11 @@ const styles = StyleSheet.create({
         marginBottom: 20
     },
     SignMessageButtonText: {
-        fontSize: 16,
+        fontSize: 12,
         color: '#268596'
     },
     SignMessageButtonTextBold: {
-        fontSize: 16,
+        fontSize: 12,
         color: '#268596',
         fontWeight: 'bold',
         marginLeft: 5

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { Platform } from "react-native";
+import { Platform, RefreshControl } from "react-native";
 import { Text, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity, View, TextInput } from "react-native";
 //import { request, PERMISSIONS} from 'react-native-permissions';
 //import Geolocation from "@react-native-community/geolocation";
@@ -27,6 +27,8 @@ const Home = () => {
     const [coordenadas, setCoordenadas] = useState(null);
     const [loading, setLoading] = useState(false);
     const [list, setList] = useState([]);
+    const [refreshing, setRefreshing] = useState(false);
+
 
     const handleLocationFinder = async () => {
         setCoordenadas(null);
@@ -46,27 +48,8 @@ const Home = () => {
             let location = await Location.getCurrentPositionAsync({});
             setCoordenadas(location);
             getBarbers();
-        }     
-       
+        }          
         
-        //setLocation(location);
-        // const location = Location.getCurrentPositionAsync();
-        //console.log(location);
-        //setCoordenadas(location);
-
-        // let result = await request(
-        //     Platform.OS === 'ios' ?
-        //         PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
-        //         :
-        //         PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION
-        // );
-
-        // if(result == 'granted'){
-
-        //     Geolocation.getCurrentPosition((info) => {
-        //         console.log(info)
-        //     })
-        // }
     }
 
     const getBarbers = async () => {
@@ -93,9 +76,22 @@ const Home = () => {
         getBarbers();
     }, [])
 
+    const onRefresh = () => {
+        setRefreshing(false);
+        getBarbers();
+        
+      }
+
+    
+
     return(
         <SafeAreaView style={styles.container}>
-            <ScrollView style={styles.scroller}>
+            <ScrollView 
+                refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                } 
+                style={styles.scroller}
+            >
                 <View style={styles.headerArea}>
                     <Text style={styles.headerTitle}>Encontre o seu barbeiro aqui</Text>
                     <TouchableOpacity style={styles.searchButton} onPress={()=>navigation.navigate('Search')}>

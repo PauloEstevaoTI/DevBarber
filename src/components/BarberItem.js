@@ -1,6 +1,8 @@
 import React from "react";
 
 import { TouchableOpacity, Image, Text, View, StyleSheet } from "react-native";
+//import Stars from '../components/Stars'
+import Stars from "../components/Stars";
 
 
 const BarberItem = ({data}) => {
@@ -10,6 +12,8 @@ const BarberItem = ({data}) => {
             <View style={styles.infoArea}>
                 <Text style={styles.userName}>{data.name}</Text>
                 
+                <Stars stars={data.stars} showNumber={true} />
+
                 <View style={styles.seeProfileButton}>
                     <Text style={styles.seeProfileButtonText}>Ver perfil</Text>
                 </View>
